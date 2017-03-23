@@ -1,0 +1,7 @@
+c2a.sh
+c2v.sh
+dsl.sh
+circobf.sh
+generate-circuits.sh
+circ-obfuscation/
+circuit-synthesis/
