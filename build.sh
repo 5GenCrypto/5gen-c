@@ -64,16 +64,16 @@ pull () {
     popd
 }
 
-# pull circuit-synthesis https://github.com/spaceships/circuit-synthesis master $circuitsynthesis
-# pull circ-obfuscation  https://github.com/5GenCrypto/circ-obfuscation  master $circobfuscation
+pull circuit-synthesis https://github.com/spaceships/circuit-synthesis master $circuitsynthesis
+pull circ-obfuscation  https://github.com/5GenCrypto/circ-obfuscation  master $circobfuscation
 
-# pushd circuit-synthesis
-# cabal sandbox init
-# cabal install
-# popd
+pushd circuit-synthesis
+cabal sandbox init
+cabal install
+popd
 
-# pushd circ-obfuscation
-# ./build.sh $debug
+pushd circ-obfuscation
+./build.sh $debug
 
 ln -fs circuit-synthesis/scripts/c2a c2a.sh
 ln -fs circuit-synthesis/scripts/c2v c2v.sh
