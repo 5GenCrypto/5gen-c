@@ -24,7 +24,7 @@ while true; do
     case "$1" in
         -c | --clean )
             rm -rf circuit-synthesis circ-obfuscation
-            rm -f generate-circuits.sh circobf.sh
+            rm -f c2a.sh c2v.sh dsl.sh generate-circuits.sh circobf.sh
             exit 0
             ;;
         -d | --debug )
@@ -35,7 +35,7 @@ while true; do
             usage 0
             ;;
         -- ) shift; break ;;
-        * ) break ;;
+        *) break ;;
     esac
 done
 
@@ -84,5 +84,5 @@ cabal run --verbose=0 -- $@
 cd ..
 EOF
 chmod 755 dsl.sh
-ln -fs circuit-synthesis/scripts/generate-circuits.sh
-ln -fs circ-obfuscation/circobf.sh
+ln -fs circuit-synthesis/scripts/generate-circuits.sh generate-circuits.sh
+ln -fs circ-obfuscation/circobf.sh circobf.sh
