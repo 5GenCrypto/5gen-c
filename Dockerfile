@@ -76,16 +76,22 @@ ENV PATH "/inst/abc:$PATH"
 # Install yosys
 #
 
+WORKDIR /inst
 RUN apt-get -y install yosys
 
 #
 # Install Sage
 #
 
+WORKDIR /inst
 RUN apt-get -y install lbzip2
 RUN wget http://mirrors.mit.edu/sage/linux/64bit/sage-7.6-Ubuntu_16.04-x86_64.tar.bz2
 RUN tar xvf sage-7.6-Ubuntu_16.04-x86_64.tar.bz2
 ENV PATH "/inst/SageMath:$PATH"
+
+#
+# Get 5gen-c repository
+#
 
 WORKDIR /inst
 RUN git clone https://github.com/5GenCrypto/5gen-c.git
