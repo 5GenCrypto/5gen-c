@@ -84,7 +84,7 @@ RUN apt-get -y install yosys
 #
 
 WORKDIR /inst
-RUN apt-get -y install lbzip2
+RUN apt-get -y install lbzip2 gfortran
 RUN wget http://mirrors.mit.edu/sage/linux/64bit/sage-7.6-Ubuntu_16.04-x86_64.tar.bz2
 RUN tar xvf sage-7.6-Ubuntu_16.04-x86_64.tar.bz2
 ENV PATH "/inst/SageMath:$PATH"
