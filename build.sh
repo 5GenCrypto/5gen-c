@@ -71,18 +71,33 @@ popd
 
 ln -fs circuit-synthesis/scripts/c2a c2a.sh
 ln -fs circuit-synthesis/scripts/c2v c2v.sh
-cat > dsl.sh <<'EOF'
+cat > circuit-synthesis.sh <<'EOF'
 #!/usr/bin/env bash
 
 dir=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
-cabaldir=$(readlink -f $dir/circuit-synthesis)
+progdir=$(readlink -f $dir/circuit-synthesis/.cabal-sandbox/bin)
 
-cd $cabaldir
-
-cabal run --verbose=0 -- $@
-
-cd ..
+$progdir/circuit-synthesis $@
 EOF
-chmod 755 dsl.sh
+chmod 755 circuit-synthesis.sh
 ln -fs circuit-synthesis/scripts/generate-circuits.sh generate-circuits.sh
 ln -fs circ-obfuscation/circobf.sh circobf.sh
+ln -fs circuit-synthesis/scripts
+
+set +x
+
+echo ""
+echo "**************************************************************************"
+echo ""
+echo "5Gen-C: Build completed successfully!"
+echo "* circuit-synthesis ($(cd circuit-synthesis && git rev-parse HEAD))"
+echo "* circ-obfuscation  ($(cd circ-obfuscation  && git rev-parse HEAD))"
+echo ""
+echo "Executables:"
+echo "* c2a.sh               :: C2A compiler"
+echo "* c2v.sh               :: C2V compiler"
+echo "* circuit-synthesis.sh :: DSL and circuit optimizer"
+echo "* generate-circuits.sh :: Script for generating all circuits"
+echo "* circobf.sh           :: Circuit obfuscation implementation"
+echo ""
+echo "**************************************************************************"

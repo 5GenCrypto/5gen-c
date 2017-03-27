@@ -3,6 +3,10 @@
 #   docker build -t 5gen-c .
 #   docker run -it 5gen-c /bin/bash
 #
+# Once in docker, run:
+#   git pull origin master
+#   ./build.sh
+#
 
 FROM ubuntu:16.04
 
@@ -65,7 +69,7 @@ RUN apt-get -y install mercurial cmake libreadline-dev
 RUN hg clone https://bitbucket.org/alanmi/abc
 WORKDIR /inst/abc
 RUN cmake .
-RUN make
+RUN make -j8
 ENV PATH "/inst/abc:$PATH"
 
 #
@@ -78,12 +82,13 @@ RUN apt-get -y install yosys
 # Install Sage
 #
 
-RUN apt-add-repository -y ppa:aims/sagemath
-RUN apt-get -y update
-# RUN apt-get -y install sagemath-upstream-binary
+RUN apt-get -y install lbzip2
+RUN wget http://mirrors.mit.edu/sage/linux/64bit/sage-7.6-Ubuntu_16.04-x86_64.tar.bz2
+RUN tar xvf sage-7.6-Ubuntu_16.04-x86_64.tar.bz2
+ENV PATH "/inst/SageMath:$PATH"
 
 WORKDIR /inst
 RUN git clone https://github.com/5GenCrypto/5gen-c.git
 
 WORKDIR /inst/5gen-c
-RUN git pull origin wip
+RUN git pull origin master
