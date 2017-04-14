@@ -9,10 +9,10 @@ usage () {
     echo "  -d,--debug      Build in debug mode"
     echo "  -c,--clean      Remove build"
     echo "  -h,--help       Print this info and exit"
-    exit $1
+    exit "$1"
 }
 
-opts=`getopt -o cdh --long clean,debug,help -n 'parse-options' -- "$@"`
+_=$(getopt -o cdh --long clean,debug,help) # -n 'parse-options' # -- "$@"
 if [ $? != 0 ]; then
     echo "Error: failed parsing options"
     usage 1
@@ -45,19 +45,19 @@ pull () {
     path=$1
     url=$2
     branch=$3
-    if [ ! -d $path ]; then
-        git clone $url $path
+    if [ ! -d "$path" ]; then
+        git clone "$url" "$path"
     fi
-    pushd $path
-        git pull origin $branch
-        if [ "$4" != "" ]; then
-            git checkout $4
-        fi
+    pushd "$path"
+    git pull origin "$branch"
+    if [ x"$4" != x"" ]; then
+        git checkout "$4"
+    fi
     popd
 }
 
-pull circuit-synthesis https://github.com/spaceships/circuit-synthesis master $circuitsynthesis
-pull circ-obfuscation  https://github.com/5GenCrypto/circ-obfuscation  master $circobfuscation
+pull circuit-synthesis https://github.com/spaceships/circuit-synthesis master # $circuitsynthesis
+pull circ-obfuscation  https://github.com/5GenCrypto/circ-obfuscation  master # $circobfuscation
 
 pushd circuit-synthesis
 cabal update
