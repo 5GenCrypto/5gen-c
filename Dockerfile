@@ -3,10 +3,6 @@
 #   docker build -t 5gen-c .
 #   docker run -it 5gen-c /bin/bash
 #
-# Once in docker, run:
-#   git pull origin master
-#   ./build.sh
-#
 
 FROM ubuntu:16.04
 
@@ -98,3 +94,4 @@ RUN git clone https://github.com/5GenCrypto/5gen-c.git
 
 WORKDIR /inst/5gen-c
 RUN git pull origin master
+RUN ./build.sh
