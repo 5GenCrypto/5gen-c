@@ -6,3 +6,4 @@ generate-circuits.sh
 circ-obfuscation/
 circuit-synthesis/
 scripts
+circsynth

@@ -63,26 +63,18 @@ pushd circuit-synthesis
 cabal update
 cabal sandbox init
 cabal install
+cabal build
 popd
 
 pushd circ-obfuscation
 ./build.sh $debug
 popd
 
-ln -fs circuit-synthesis/scripts/c2a c2a.sh
-ln -fs circuit-synthesis/scripts/c2v c2v.sh
-cat > circuit-synthesis.sh <<'EOF'
-#!/usr/bin/env bash
-
-dir=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
-progdir=$(readlink -f $dir/circuit-synthesis/.cabal-sandbox/bin)
-
-$progdir/circuit-synthesis $@
-EOF
-chmod 755 circuit-synthesis.sh
-ln -fs circuit-synthesis/scripts/generate-circuits.sh generate-circuits.sh
-ln -fs circ-obfuscation/circobf.sh circobf.sh
-ln -fs circuit-synthesis/scripts
+ln -fs circuit-synthesis/dist/build/circuit-synthesis/circuit-synthesis circsynth
+ln -fs circ-obfuscation/circobf.sh circobf
+# Needs to be called scripts as circsynth hardcodes those paths
+ln -fs circuit-synthesis/scripts scripts
+ln -fs circ-obfuscation/scripts circobf-scripts
 
 set +x
 
@@ -94,10 +86,12 @@ echo "* circuit-synthesis ($(cd circuit-synthesis && git rev-parse HEAD))"
 echo "* circ-obfuscation  ($(cd circ-obfuscation  && git rev-parse HEAD))"
 echo ""
 echo "Executables:"
-echo "* c2a.sh               :: C2A compiler"
-echo "* c2v.sh               :: C2V compiler"
-echo "* circuit-synthesis.sh :: DSL and circuit optimizer"
-echo "* generate-circuits.sh :: Script for generating all circuits"
-echo "* circobf.sh           :: Circuit obfuscation implementation"
+echo "* circsynth            :: Circuit synthesis"
+echo "* circobf              :: Circuit obfuscation"
+echo "* circgen              :: Generate circuits"
+echo ""
+echo "Directories:"
+echo "* circsynth-scripts    :: Scripts for circsynth"
+echo "* circobf-scripts      :: Scripts for circobf"
 echo ""
 echo "**************************************************************************"
