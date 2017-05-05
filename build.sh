@@ -6,6 +6,7 @@ usage () {
     echo "5Gen-C build script"
     echo ""
     echo "Flags:"
+    echo "  --no-cxs        Do not build cxs"
     echo "  -d,--debug      Build in debug mode"
     echo "  -c,--clean      Remove build"
     echo "  -h,--help       Print this info and exit"
@@ -18,6 +19,7 @@ if [ $? != 0 ]; then
     usage 1
 fi
 
+cxs=1
 debug=''
 
 while true; do
@@ -28,9 +30,9 @@ while true; do
             exit 0
             ;;
         -d | --debug )
-            debug='debug'
-            shift
-            ;;
+            debug='debug'; shift ;;
+        --no-cxs )
+            cxs=0; shift ;;
         -h | --help )
             usage 0
             ;;
@@ -56,24 +58,31 @@ pull () {
     popd
 }
 
-pull circuit-synthesis https://github.com/spaceships/circuit-synthesis master # $circuitsynthesis
+
+if [[ $cxs == 1 ]]; then
+    pull circuit-synthesis https://github.com/spaceships/circuit-synthesis master # $circuitsynthesis
+fi
 pull circ-obfuscation  https://github.com/5GenCrypto/circ-obfuscation  master # $circobfuscation
 
-pushd circuit-synthesis
-cabal update
-cabal sandbox init
-cabal install
-cabal build
-popd
-
+if [[ $cxs == 1 ]]; then
+    pushd circuit-synthesis
+    cabal update
+    cabal sandbox init
+    cabal install
+    cabal build
+    popd
+fi
+    
 pushd circ-obfuscation
 ./build.sh $debug
 popd
 
-ln -fs circuit-synthesis/dist/build/circuit-synthesis/circuit-synthesis cxs
+if [[ $cxs == 1 ]]; then
+    ln -fs circuit-synthesis/dist/build/circuit-synthesis/circuit-synthesis cxs
+    # Needs to be called scripts as cxs hardcodes those paths
+    ln -fs circuit-synthesis/scripts scripts
+fi
 ln -fs circ-obfuscation/mio.sh mio
-# Needs to be called scripts as cxs hardcodes those paths
-ln -fs circuit-synthesis/scripts scripts
 ln -fs circ-obfuscation/scripts mio-scripts
 
 set +x
@@ -82,16 +91,22 @@ echo ""
 echo "**************************************************************************"
 echo ""
 echo "5Gen-C: Build completed successfully!"
-echo "* circuit-synthesis ($(cd circuit-synthesis && git rev-parse HEAD))"
+if [[ $cxs == 1 ]]; then
+    echo "* circuit-synthesis ($(cd circuit-synthesis && git rev-parse HEAD))"
+fi
 echo "* circ-obfuscation  ($(cd circ-obfuscation  && git rev-parse HEAD))"
 echo ""
 echo "Executables:"
-echo "* cxs                  :: circuit synthesis"
 echo "* mio                  :: circuit-based MIFE / obfuscation"
-echo "* circgen              :: generate circuits"
+if [[ $cxs == 1 ]]; then
+    echo "* cxs                  :: circuit synthesis"
+    echo "* circgen              :: generate circuits"
+fi
 echo ""
 echo "Directories:"
-echo "* scripts              :: scripts for cxs"
+if [[ $cxs == 1 ]]; then
+    echo "* scripts              :: scripts for cxs"
+fi
 echo "* mio-scripts          :: scripts for mio"
 echo ""
 echo "**************************************************************************"
