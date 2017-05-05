@@ -24,7 +24,7 @@ while true; do
     case "$1" in
         -c | --clean )
             rm -rf circuit-synthesis circ-obfuscation
-            rm -f c2a.sh c2v.sh dsl.sh generate-circuits.sh circobf.sh
+            rm -f c2a.sh c2v.sh dsl.sh generate-circuits.sh mio cxs
             exit 0
             ;;
         -d | --debug )
@@ -70,11 +70,11 @@ pushd circ-obfuscation
 ./build.sh $debug
 popd
 
-ln -fs circuit-synthesis/dist/build/circuit-synthesis/circuit-synthesis circsynth
-ln -fs circ-obfuscation/circobf.sh circobf
-# Needs to be called scripts as circsynth hardcodes those paths
+ln -fs circuit-synthesis/dist/build/circuit-synthesis/circuit-synthesis cxs
+ln -fs circ-obfuscation/mio.sh mio
+# Needs to be called scripts as cxs hardcodes those paths
 ln -fs circuit-synthesis/scripts scripts
-ln -fs circ-obfuscation/scripts circobf-scripts
+ln -fs circ-obfuscation/scripts mio-scripts
 
 set +x
 
@@ -86,12 +86,12 @@ echo "* circuit-synthesis ($(cd circuit-synthesis && git rev-parse HEAD))"
 echo "* circ-obfuscation  ($(cd circ-obfuscation  && git rev-parse HEAD))"
 echo ""
 echo "Executables:"
-echo "* circsynth            :: Circuit synthesis"
-echo "* circobf              :: Circuit obfuscation"
-echo "* circgen              :: Generate circuits"
+echo "* cxs                  :: circuit synthesis"
+echo "* mio                  :: circuit-based MIFE / obfuscation"
+echo "* circgen              :: generate circuits"
 echo ""
 echo "Directories:"
-echo "* circsynth-scripts    :: Scripts for circsynth"
-echo "* circobf-scripts      :: Scripts for circobf"
+echo "* scripts              :: scripts for cxs"
+echo "* mio-scripts          :: scripts for mio"
 echo ""
 echo "**************************************************************************"

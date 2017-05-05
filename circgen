@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-set -e
-
-dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
-
-"$dir"/scripts/generate-circuits.sh -o
-tar xvf circuits.tgz -C circ-obfuscation
-rm circuits.tgz
