@@ -11,6 +11,7 @@ nprgs=$1
 symlen=$2
 keylen=$3
 secparam=$4
+npowers=8
 inplen=$(python -c "import math; print('%d' % (math.log(${symlen}, 2) * ${nprgs},))")
 eval=$(python -c "print('0' * ${nprgs} * ${symlen})")
 
@@ -20,7 +21,7 @@ mio=$(readlink -f "$dir/../mio")
 
 circuit="${circuits}/sigma/ggm_sigma_${nprgs}_${symlen}_${keylen}.dsl.acirc"
 
-args="--verbose --npowers 4 --sigma --symlen 16 --smart --mmap CLT --secparam ${secparam} ${circuit}"
+args="--verbose --npowers ${npowers} --sigma --symlen ${symlen} --smart --mmap CLT --secparam ${secparam} ${circuit}"
 
 $mio obf obfuscate $args 2>&1 | tee /tmp/obfuscate.txt
 ngates=$(grep "ngates" /tmp/obfuscate.txt | cut -d' ' -f4)
