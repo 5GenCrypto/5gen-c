@@ -9,7 +9,7 @@ tmp=$(mktemp)
 cat <<EOF > "$tmp"
 import math
 length = 1
-while math.log2(${base}**length) < 80:
+while math.log(${base}**length, 2) < 80:
     length += 1
 print('0' * length)
 EOF
