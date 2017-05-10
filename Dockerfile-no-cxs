@@ -13,6 +13,7 @@ RUN apt-get -y install git
 RUN apt-get -y install gcc g++
 RUN apt-get -y install autoconf libtool make flex bison
 RUN apt-get -y install libgmp-dev libmpfr-dev libssl-dev libflint-dev
+RUN apt-get -y install python
 
 #
 # Get 5gen-c repository
