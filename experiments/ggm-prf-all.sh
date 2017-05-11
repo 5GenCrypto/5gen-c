@@ -7,7 +7,8 @@ if [[ $# != 1 ]]; then
     exit 1
 fi
 
-script="./ggm-prf.sh"
+dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+script="${dir}/ggm-prf.sh"
 secparam=$1
 
 echo "*************"
