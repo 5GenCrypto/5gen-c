@@ -2,8 +2,8 @@
 
 set -e
 
-if [[ $# != 4 ]]; then
-    echo "Usage: ggm-prf.sh <nprgs> <symlen> <keylen> <secparam>"
+if [[ $# != 4 && $# != 5 ]]; then
+    echo "Usage: ggm-prf.sh <nprgs> <symlen> <keylen> <secparam> [circuit-dir]"
     exit 1
 fi
 
@@ -11,12 +11,15 @@ nprgs=$1
 symlen=$2
 keylen=$3
 secparam=$4
+circuits=$5
 npowers=8
 inplen=$(python -c "import math; print('%d' % (math.log(${symlen}, 2) * ${nprgs},))")
 eval=$(python -c "print('0' * ${nprgs} * ${symlen})")
 
 dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
-circuits=$(readlink -f "$dir/../circ-obfuscation/circuits")
+if [[ $circuits == "" ]]; then
+    circuits=$(readlink -f "$dir/../circ-obfuscation/circuits")
+fi
 mio=$(readlink -f "$dir/../mio")
 
 circuit="${circuits}/sigma/ggm_sigma_${nprgs}_${symlen}_${keylen}.dsl.acirc"
