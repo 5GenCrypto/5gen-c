@@ -24,7 +24,7 @@ mio=$(readlink -f "$dir/../mio")
 
 circuit="${circuits}/sigma/ggm_sigma_${nprgs}_${symlen}_${keylen}.dsl.acirc"
 
-args="--verbose --npowers ${npowers} --sigma --symlen ${symlen} --smart --mmap CLT --secparam ${secparam} ${circuit}"
+args="--verbose --npowers ${npowers} --sigma --symlen ${symlen} --smart --mmap CLT --scheme MIFE --secparam ${secparam} ${circuit}"
 
 $mio obf obfuscate $args 2>&1 | tee /tmp/obfuscate.txt
 ngates=$(grep "ngates" /tmp/obfuscate.txt | cut -d' ' -f4)

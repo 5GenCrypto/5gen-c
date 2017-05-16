@@ -11,8 +11,10 @@ dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
 script="${dir}/ggm-prf.sh"
 secparam=$1
 circdir=$2
-if [[ $circdir != "" ]]; then
-    mkdir -p "$circdir/circuits"
+if [[ $circdir == "" ]]; then
+    circdir="$dir/../circ-obfuscation"
+else
+    mkdir -p "$circdir"
     cp -r "$(readlink -f "$dir/../circ-obfuscation/circuits")" "$circdir"
 fi
 circdir="$circdir/circuits"
