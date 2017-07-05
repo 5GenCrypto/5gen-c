@@ -1,7 +1,7 @@
 #
 # To use, run:
-#   docker build -t 5gen-c .
-#   docker run -it 5gen-c /bin/bash
+#   docker build -t 5gen-c-no-cxs - < Dockerfile-no-cxs
+#   docker run -it 5gen-c-no-cxs /bin/bash
 #
 
 FROM ubuntu:16.04

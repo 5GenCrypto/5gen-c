@@ -8,7 +8,7 @@ We supply a `Dockerfile` for building the system.  To build, run:
 
     docker build -t 5gen-c .
     
-To run the docker container, run:
+Then, to run the docker container, run:
 
     docker run -it 5gen-c /bin/bash
     
@@ -16,6 +16,19 @@ Once in the container, run the following to build the code:
 
     git pull origin master
     ./build.sh
+    
+If you don't want/need to build `cxs` (which takes a long time), run:
+
+    docker build -t 5gen-c-no-cxs - < Dockerfile-no-cxs
+
+And then to run the container:
+
+    docker run -it 5gen-c-no-cxs /bin/bash
+    
+Building `5gen-c` is similar to above, except now we don't want to build `cxs`:
+
+    git pull origin master
+    ./build.sh --no-cxs
     
 ## Building with `build.sh`
 
