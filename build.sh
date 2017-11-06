@@ -69,6 +69,7 @@ if [[ $cxs == 1 ]]; then
     cabal update
     cabal sandbox init
     cabal install
+    cabal configure
     cabal build
     popd
 fi
