@@ -17,6 +17,7 @@ RUN apt-get -y install libgmp-dev libmpfr-dev libssl-dev libflint-dev
 RUN apt-get -y install cabal-install ghc
 RUN apt-get -y install python perl
 RUN apt-get -y install wget
+RUN apt-get -y install bsdtar
 
 #
 # Install Z3
@@ -82,7 +83,7 @@ RUN apt-get -y install yosys
 WORKDIR /inst
 RUN apt-get -y install lbzip2 gfortran
 RUN wget http://mirrors.mit.edu/sage/linux/64bit/sage-7.6-Ubuntu_16.04-x86_64.tar.bz2
-RUN tar xvf sage-7.6-Ubuntu_16.04-x86_64.tar.bz2
+RUN bsdtar xvf sage-7.6-Ubuntu_16.04-x86_64.tar.bz2
 ENV PATH "/inst/SageMath:$PATH"
 
 #
