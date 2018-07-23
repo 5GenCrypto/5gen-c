@@ -9,7 +9,6 @@ FROM ubuntu:latest
 RUN apt-get -y update
 RUN apt-get -y install software-properties-common
 RUN add-apt-repository -y ppa:hvr/ghc
-RUN add-apt-repository -y ppa:saltmakrell/ppa
 RUN apt-get -y update
 RUN apt-get -y install git
 RUN apt-get -y install gcc g++
@@ -17,7 +16,8 @@ RUN apt-get -y install autoconf libtool make flex bison
 RUN apt-get -y install libgmp-dev libmpfr-dev libssl-dev libflint-dev
 RUN apt-get -y install python perl
 RUN apt-get -y install wget bsdtar
-RUN apt-get -y install z3 cryptol berkeley-abc yosys
+RUN apt-get -y install z3
+RUN apt-get -y install cryptol 
 
 #
 # Install GHC
@@ -26,6 +26,14 @@ RUN apt-get -y install z3 cryptol berkeley-abc yosys
 RUN wget -q https://haskell.org/platform/download/8.4.3/haskell-platform-8.4.3-unknown-posix--core-x86_64.tar.gz
 RUN tar xf haskell-platform-8.4.3-unknown-posix--core-x86_64.tar.gz
 RUN ./install-haskell-platform.sh
+
+#
+# Install yosys
+#
+
+WORKDIR /inst
+ENV DEBIAN_FRONTEND "noninteractive apt-get autoremove"
+RUN apt-get -y install yosys
 
 #
 # Install SAW
